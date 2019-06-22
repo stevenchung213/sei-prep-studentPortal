@@ -30,7 +30,7 @@ const LogIn = props => {
   });
 
   const handleChange = (e) => {
-
+    e.persist();
     setUserinfo(currentState => ({
       ...currentState,
       [e.target.name]: e.target.value
