@@ -9,6 +9,10 @@ import School from '@material-ui/icons/School';
 import VpnKey from '@material-ui/icons/VpnKey';
 import { CenteredHeader1, CenteredHeader2, ColumnFlexBox, FullContainer } from "./styles";
 import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
 
 const styles = theme => ({
   margin: {
@@ -21,6 +25,13 @@ const styles = theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: 200,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(1),
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    width: '100%',
   },
 });
 
@@ -52,7 +63,7 @@ const SignUp = props => {
   });
 
   const handleChange = (e) => {
-
+    e.persist();
     setUserinfo(currentState => ({
       ...currentState,
       [e.target.name]: e.target.value
@@ -62,10 +73,10 @@ const SignUp = props => {
   const submit = (e) => {
     e.preventDefault();
 
-    if (userinfo.cohort.length === 0) {
-      alert('please select your SEI-PREP class #');
-      return;
-    }
+    // if (!userinfo.username.includes('.')) {
+    //   alert('use the slack naming convention\nexjane.smith');
+    //   return;
+    // }
 
     setUserinfo(currentState => ({
       ...currentState,
@@ -137,16 +148,18 @@ const SignUp = props => {
                              value={userinfo.cohort}
                              onChange={handleChange}
                              SelectProps={{
+                               native: true,
                                MenuProps: {
                                  className: classes.menu,
                                },
                              }}
                              helperText="select your SEI-PREP #">
+                    <option/>
                     {
                       cohorts.map(cohort => (
-                        <MenuItem key={cohort.value} value={cohort.value}>
+                        <option key={cohort.value} value={cohort.value}>
                           {cohort.cohort}
-                        </MenuItem>
+                        </option>
                       ))
                     }
                   </TextField>

@@ -7,7 +7,24 @@ import SignUp from './SignUp';
 import NoMatch from "./NoMatch";
 import LogIn from "./LogIn";
 
-const Main = props => {
+const Main = () => {
+
+  const api = process.env.API || `http://localhost:3000/api/v1`;
+
+  const [user, setUser] = useState({
+    username: null,
+    auth: false,
+  });
+
+  const authUser = user => {
+
+    fetch(`${api}`,
+      {
+        method: 'POST',
+
+      }).then()
+
+  };
 
   return (
     <FullContainer>
