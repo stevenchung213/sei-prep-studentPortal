@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import { BrowserRouter, HashRouter } from "react-router-dom";
 import Main from './components/Main';
-import styles from './styles.css';
 
 const render = Component => {
   ReactDOM.render(
     <AppContainer>
-      <Component />
+      <HashRouter>
+        <Component/>
+      </HashRouter>
     </AppContainer>,
     document.getElementById('root')
   );

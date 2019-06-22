@@ -1,28 +1,21 @@
-const express = require('express');
-const helmet = require('helmet');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const path = require('path');
-const seiPrep = require('./routes/sei-prep');
+const express = require('express'),
+  helmet = require('helmet'),
+  bodyParser = require('body-parser'),
+  cors = require('cors'),
+  path = require('path'),
+  seiPrep = require('./routes/seiPrep');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-/* MIDDLEWARES */
-// securing your app by setting various HTTP headers
-app.use(helmet());
-// to deal with cross-origin resource sharing
-app.use(cors());
-// support parsing of application/json type post data
-app.use(bodyParser.json());
-// support parsing of application/x-www-form-urlencoded post data
-app.use(bodyParser.urlencoded({ extended: true }));
-// set static-files distribution folder
-app.use(express.static(path.resolve(__dirname + '/../dist')));
-// specific route instructions
-app.use('./api/seiPrep', seiPrep);
 
-// send our index.html to client upon arrival of our site
+app.use(helmet());
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.resolve(__dirname + '/../dist')));
+app.use('/api/v1/', seiPrep);
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + '/../dist/index.html'), err => {
     if (err) {
@@ -32,8 +25,6 @@ app.get('/', (req, res) => {
 });
 
 
-
-// have express listen on defined ${port} which is currently set to 3000 on line 7
 app.listen(port, (err) => {
   if (err) {
     console.log(err);

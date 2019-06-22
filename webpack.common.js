@@ -10,7 +10,7 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: __dirname + '/dist',
-    publicPath: '/',
+    // publicPath: 'dist',
   },
   module: {
     rules: [
@@ -87,6 +87,7 @@ module.exports = {
         "https://fonts.googleapis.com/icon?family=Material+Icons"
       ],
       appMountId: 'root',
+      headHtmlSnippet: `<style>body { margin: 0; }</style>`,
       bodyHtmlSnippet: `<noscript>Please enable JavaScript...</noscript>`,
       scripts: [
         // all other script tags here
