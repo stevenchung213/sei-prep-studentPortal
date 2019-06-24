@@ -11,8 +11,8 @@ router.use((req, res, next) => {
 //   console.log(`get request from ${req.originalUrl}\n`, req.params);
 // });
 
-router.post('/', (req, res) => {
-  console.log(`post request from ${req.originalUrl}\n`, req.body);
+router.post('/register', (req, res) => {
+  console.log(`post request from ${req.originalUrl}\n at /register`, req.body);
   const { username, password, cohort } = req.body;
   // check if student exists in database
   Student.find({ username }).exec()
@@ -22,26 +22,25 @@ router.post('/', (req, res) => {
         // create new student document
         const newStudent = new Student({ username, password, cohort });
         newStudent.save()
-          .then(resp => res.status(200).json(resp))
+          .then(() => res.status(200).json({ success: 'registration' }))
           .catch(err => console.log(`error while saving new student\n${err}`));
       } else {
         // if student EXISTS
         res.status(200).json({
-          message: `student account already exists:\n ${username}`
+          message: `student username already exists:\n ${username}`
         });
       }
     })
-    .catch(err => console.log(`error handling signup POST request at route ${req.originalUrl}\n${err}`));
+    .catch(err => {
+      console.log(`error handling registration POST request from route ${req.originalUrl} at /register\n${err}`);
+      res.status(200).json({
+        error: 'an error occurred during registration'
+      });
+    });
+});
 
-  // const newStudent = new Student({ username, password, cohort });
-  //
-  // newStudent.save(err => {
-  //   if (err) {
-  //     console.log(err);
-  //     throw err;
-  //   }
-  // });
-
+router.post('/login', (req, res) => {
+  console.log(`post request from ${req.originalUrl}\n at /login`, req.body);
 
 });
 

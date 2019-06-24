@@ -1,13 +1,15 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
-import Done from '@material-ui/icons/Done';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import VpnKey from '@material-ui/icons/VpnKey';
+import Home from '@material-ui/icons/Home';
+import PersonAdd from '@material-ui/icons/PersonAdd';
 import { CenteredHeader1, CenteredHeader2, ColumnFlexBox, FullContainer } from "./styles";
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
   margin: {
@@ -69,7 +71,7 @@ const LogIn = props => {
     <FullContainer id={`signup-container`}>
       <ColumnFlexBox id={`signup-input-container`}>
         <CenteredHeader2>SEI - PREMIUM PREP</CenteredHeader2>
-        <CenteredHeader1>Student Log In</CenteredHeader1>
+        <CenteredHeader1>Student Portal</CenteredHeader1>
         <form onSubmit={submit}>
           <FormControl className={classes.margin}>
             <div className={classes.margin}>
@@ -97,7 +99,14 @@ const LogIn = props => {
             <br/>
             <Button variant="contained" color="default" type={`submit`}>
               log in
-              <Done className={classes.rightIcon}/>
+              <Home className={classes.rightIcon}/>
+            </Button>
+            <br/>
+            <br/>
+            <Button variant="contained" color="primary"
+                    component={Link} to={`/signup`}>
+              register
+              <PersonAdd className={classes.rightIcon}/>
             </Button>
           </FormControl>
         </form>
@@ -105,71 +114,5 @@ const LogIn = props => {
     </FullContainer>
   );
 };
-// class LogIn extends Component {
-//   constructor(props) {
-//     super(props);
-//
-//     this.state = {
-//       username: '',
-//       password: ''
-//     }
-//   }
-//
-//   handleChange = (e) => {
-//     this.setState({ [e.target.name]: e.target.value })
-//   };
-//
-//   handleSubmit = (e) => {
-//     e.preventDefault();
-//     // ajax to api
-//     console.log(this.state.username, this.state.password)
-//   };
-//
-//   render() {
-//     const { classes } = this.props;
-//
-//     return (
-//       <FullContainer id={`signup-container`}>
-//         <ColumnFlexBox id={`signup-input-container`}>
-//           <CenteredHeader2>SEI - PREMIUM PREP</CenteredHeader2>
-//           <CenteredHeader1>Student Portal</CenteredHeader1>
-//           <CenteredHeader2>Log In</CenteredHeader2>
-//           <form onSubmit={this.handleSubmit}>
-//             <FormControl className={classes.margin}>
-//               <div className={classes.margin}>
-//                 <Grid container spacing={1} alignItems="flex-end">
-//                   <Grid item>
-//                     <AccountCircle/>
-//                   </Grid>
-//                   <Grid item>
-//                     <TextField required id="input-with-icon-grid" label="username"
-//                                name={`username`} onChange={this.handleChange}/>
-//                   </Grid>
-//                 </Grid>
-//               </div>
-//               <div className={classes.margin}>
-//                 <Grid container spacing={1} alignItems="flex-end">
-//                   <Grid item>
-//                     <VpnKey/>
-//                   </Grid>
-//                   <Grid item>
-//                     <TextField required id="input-with-icon-grid" label="password"
-//                                name={`password`} onChange={this.handleChange}/>
-//                   </Grid>
-//                 </Grid>
-//               </div>
-//               <br/>
-//               <Button variant="contained" color="default" type={`submit`}>
-//                 sign up
-//                 <Done className={classes.rightIcon}/>
-//               </Button>
-//             </FormControl>
-//           </form>
-//         </ColumnFlexBox>
-//       </FullContainer>
-//     );
-//   }
-// }
 
 export default withStyles(styles)(LogIn);
-
