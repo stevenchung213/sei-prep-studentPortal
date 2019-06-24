@@ -8,11 +8,6 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import School from '@material-ui/icons/School';
 import VpnKey from '@material-ui/icons/VpnKey';
 import { CenteredHeader1, CenteredHeader2, ColumnFlexBox, FullContainer } from "./styles";
-import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
 
 const styles = theme => ({
   margin: {
@@ -37,7 +32,7 @@ const styles = theme => ({
 
 const SignUp = props => {
 
-  const api = process.env.API || `http://localhost:3000/api`;
+  const api = process.env.API || `http://localhost:3000/api/students`;
   const { classes } = props;
   const cohorts = [
     {
@@ -72,11 +67,29 @@ const SignUp = props => {
 
   const submit = (e) => {
     e.preventDefault();
+    console.log(userinfo)
+    const { username, password, cohort } = userinfo;
+    // Validation
+    // requires '.' between first and last name
+    if (!username.includes('.')) {
+      alert('use the slack naming convention\nlower-cased\n\nexample:\n      jane.smith\n      john.doe');
+      return;
+    }
 
-    // if (!userinfo.username.includes('.')) {
-    //   alert('use the slack naming convention\nexjane.smith');
-    //   return;
-    // }
+    const lowerCasedLetters = /^[a-z]+$/;
+    const splitName = username.split('.');
+    const firstName = splitName[0];
+    const lastName = splitName[1];
+    // lower-cased only user name
+    if (!lowerCasedLetters.test(firstName) || !lowerCasedLetters.test(lastName)) {
+      alert('lower-cased letters only');
+      return;
+    }
+    // password length of at least 6 chars
+    if (password.length < 6) {
+      alert('password must be at least 6 characters');
+      return;
+    }
 
     setUserinfo(currentState => ({
       ...currentState,
@@ -84,7 +97,6 @@ const SignUp = props => {
     }));
 
     const url = `${api}/v1`;
-    const { username, password, cohort } = userinfo;
     const student = { username, password, cohort };
 
     fetch(url, {
@@ -92,11 +104,14 @@ const SignUp = props => {
       body: JSON.stringify(student),
       headers: { "Content-Type": "application/json" }
     })
-      .then(() => {
+      .then(resp => resp.json())
+      .then(resp => {
+        console.log(resp)
         setUserinfo(currentState => ({
           ...currentState,
           complete: true
         }));
+
       })
       .catch(err => {
         console.log(err);

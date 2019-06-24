@@ -20,7 +20,7 @@ const styles = theme => ({
 
 const LogIn = props => {
 
-  const api = process.env.API || `http://localhost:3000/api`;
+  const api = process.env.API || `http://localhost:3000/api/students`;
   const { classes } = props;
 
   const [userinfo, setUserinfo] = useState({

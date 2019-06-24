@@ -9,11 +9,11 @@ import LogIn from "./LogIn";
 
 const Main = () => {
 
-  const api = process.env.API || `http://localhost:3000/api/v1`;
+  const api = process.env.API || `http://localhost:3000/api/students`;
 
   const [user, setUser] = useState({
-    username: null,
-    auth: false,
+    userId: null,
+    isAuthenticated: false,
   });
 
   const authUser = user => {

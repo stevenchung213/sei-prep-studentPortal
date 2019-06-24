@@ -14,7 +14,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname + '/../dist')));
-app.use('/api/v1/', seiPrep);
+app.use('/api/students/v1/', seiPrep);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + '/../dist/index.html'), err => {
@@ -23,7 +23,6 @@ app.get('/', (req, res) => {
     }
   });
 });
-
 
 app.listen(port, (err) => {
   if (err) {

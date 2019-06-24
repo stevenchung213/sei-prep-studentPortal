@@ -9,17 +9,17 @@ mongoose.connect(mongoUri, {
   useNewUrlParser: true,
   useFindAndModify: false
 })
-  .then(() => {
-    console.log(`mongoDB connected at ${mongoUri}`);
-  })
+  .then(() => console.log(`mongoDB connected at ${mongoUri}`))
   .catch(err => console.log(err));
 
-const StudentsSchema = new mongoose.Schema({
-  name: { type: String, required: true, index: { unique: true } },
-  password: { type: String, required: true }
+const StudentSchema = new mongoose.Schema({
+  username: { type: String, required: true, index: { unique: true } },
+  password: { type: String, required: true },
+  cohort: Number,
+  attendance: [String]
 });
 
-StudentsSchema.pre('save', function(next) {
+StudentSchema.pre('save', function(next) {
   let user = this;
 
 // only hash the password if it has been modified (or is new)
@@ -38,11 +38,9 @@ StudentsSchema.pre('save', function(next) {
       next();
     });
   });
-
-
 });
 
-StudentsSchema.methods.comparePassword = function(candidatePassword, cb) {
+StudentSchema.methods.comparePassword = function(candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
     if (err) return cb(err);
     cb(null, isMatch);
@@ -50,4 +48,4 @@ StudentsSchema.methods.comparePassword = function(candidatePassword, cb) {
 };
 
 
-module.exports = mongoose.model('Students', StudentsSchema);
+module.exports = mongoose.model('Student', StudentSchema);
